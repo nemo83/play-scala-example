@@ -28,6 +28,6 @@ publishTo := {
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-    Some("snapshots" at nexus + "content/repositories/releases")
+    Some("releases" at nexus + "content/repositories/releases")
 }
-credentials += Credentials("Simple local nexus", "jenkins.local", "deployment", "development")
+credentials += Credentials("Nexus Repository Manager", "jenkins.local", "deployment", "development")
