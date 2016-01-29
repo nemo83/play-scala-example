@@ -22,3 +22,12 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
+
+publishTo := {
+  val nexus = "https://jenkins.local/nexus/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("snapshots" at nexus + "content/repositories/releases/")
+}
+credentials += Credentials("Simple local nexus", "jenkins.local", "deployment", "development")
