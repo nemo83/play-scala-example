@@ -1,6 +1,8 @@
 name := """play-scala-example"""
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .enablePlugins(DockerPlugin)
 
 scalaVersion := "2.11.6"
 
