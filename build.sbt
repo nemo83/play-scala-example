@@ -29,3 +29,9 @@ publishTo := {
     Some("releases" at nexus + "content/repositories/releases")
 }
 credentials += Credentials("Nexus Repository Manager", "jenkins.local", "deployment", "development")
+
+lazy val dockerRelease: ReleaseStep = { st: State =>
+  val extracted = Project.extract(st)
+  val ref = extracted.get(thisProjectRef)
+  extracted.runAggregated(publish in Docker in ref, st)
+}
