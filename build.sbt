@@ -2,7 +2,6 @@ name := """play-scala-example"""
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
-  .enablePlugins(DockerPlugin)
 
 scalaVersion := "2.11.6"
 
@@ -32,8 +31,18 @@ publishTo := {
 }
 credentials += Credentials("Nexus Repository Manager", "jenkins.local", "deployment", "development")
 
-lazy val dockerRelease: ReleaseStep = { st: State =>
-  val extracted = Project.extract(st)
-  val ref = extracted.get(thisProjectRef)
-  extracted.runAggregated(publish in Docker in ref, st)
-}
+import ReleaseTransformations._
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,              // : ReleaseStep
+  inquireVersions,                        // : ReleaseStep
+  runTest,                                // : ReleaseStep
+  setReleaseVersion,                      // : ReleaseStep
+  commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
+  tagRelease,                             // : ReleaseStep
+  publishArtifacts,                       // : ReleaseStep, checks whether `publishTo` is properly set up
+  releaseStepTask(publish in Docker),
+  setNextVersion,                         // : ReleaseStep
+  commitNextVersion,                      // : ReleaseStep
+  pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
+)
