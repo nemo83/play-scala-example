@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
 
 // ** Docker Specific Stuff
 // Exposing the Play ports
+dockerRepository := Some("hub.docker.com/nemo83")
 dockerExposedPorts in Docker := Seq(9000, 9443)
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
