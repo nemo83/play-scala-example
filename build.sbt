@@ -24,10 +24,10 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 routesGenerator := InjectedRoutesGenerator
 
 publishTo := {
-  val nexus = "https://jenkins.local/nexus/"
+  val nexus = "http://jenkins.local/nexus/"
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-    Some("snapshots" at nexus + "content/repositories/releases/")
+    Some("snapshots" at nexus + "content/repositories/releases")
 }
 credentials += Credentials("Simple local nexus", "jenkins.local", "deployment", "development")
